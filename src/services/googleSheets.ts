@@ -1,18 +1,34 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
+import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
   User,
+  Auth,
 } from 'firebase/auth';
-import firebaseConfig from '../../firebase-applet-config.json';
 import { FranchiseLead } from '../data/redGroomData';
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
+const configModules = import.meta.glob('../../firebase-applet-config.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, Record<string, string>>;
+
+const loadedConfig = Object.values(configModules)[0];
+
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+
+try {
+  if (loadedConfig && loadedConfig.apiKey) {
+    app = getApps().length === 0 ? initializeApp(loadedConfig) : getApp();
+    auth = getAuth(app);
+  }
+} catch (err) {
+  console.warn('Firebase Auth no disponible en este entorno:', err);
+}
 
 const provider = new GoogleAuthProvider();
 SCOPES.forEach((scope) => provider.addScope(scope));
@@ -25,6 +41,10 @@ export const initAuth = (
   onAuthSuccess?: (user: User, token: string) => void,
   onAuthFailure?: () => void
 ) => {
+  if (!auth) {
+    if (onAuthFailure) onAuthFailure();
+    return () => {};
+  }
   return onAuthStateChanged(auth, async (user: User | null) => {
     if (user) {
       if (cachedAccessToken) {
@@ -44,6 +64,9 @@ export const googleSignIn = async (): Promise<{
   user: User;
   accessToken: string;
 } | null> => {
+  if (!auth) {
+    throw new Error('Autenticación de Google disponible desde el entorno de administración.');
+  }
   try {
     isSigningIn = true;
     const result = await signInWithPopup(auth, provider);
@@ -67,7 +90,9 @@ export const getAccessToken = async (): Promise<string | null> => {
 };
 
 export const logoutGoogle = async () => {
-  await auth.signOut();
+  if (auth) {
+    await auth.signOut();
+  }
   cachedAccessToken = null;
 };
 
