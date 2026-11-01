@@ -1,0 +1,6 @@
+{
+  "name": "RED GROOM – Microfranquicias de Spa Grooming Profesional",
+  "description": "Abre tu propio Spa Grooming profesional respaldado por RED GROOM. Modelo de negocio estandarizado, equipamiento GROOM-TEK, cosmética especializada y acompañamiento integral.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
