@@ -258,15 +258,20 @@ export default function App() {
       )}
 
       {/* SINGLE CLEAN HEADER WITH INTEGRATED HORIZONTAL TABS */}
-      <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-[#D6E2EE]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-8">
-          {/* Zone 1: Brand Wordmark */}
+      <header className="sticky top-0 z-30 bg-[#041B3D] border-b border-white/10 shadow-md">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-6">
+          {/* Zone 1: Brand Logo */}
           <button
             type="button"
             onClick={() => selectTab('todo')}
-            className="text-xl font-bold tracking-tight text-[#0B2545] whitespace-nowrap shrink-0 cursor-pointer"
+            className="flex items-center shrink-0 cursor-pointer focus:outline-none"
+            aria-label="Ir al inicio de RED GROOM"
           >
-            RED GROOM
+            <img
+              src="/assets/aistudio/Gemini_Generated_Image_lpla4wlpla4wlpla_593d66a4.jfif"
+              alt="GroomRed – Red de Microfranquicias"
+              className="h-14 sm:h-16 w-44 sm:w-52 object-cover object-center rounded-md"
+            />
           </button>
 
           {/* Zone 2: Horizontal Navigation Tabs */}
@@ -284,10 +289,10 @@ export default function App() {
                   aria-selected={active}
                   type="button"
                   onClick={() => selectTab(tab.id)}
-                  className={`px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                  className={`px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                     active
-                      ? 'bg-[#0B2545] text-white'
-                      : 'text-[#4A607A] hover:text-[#0B2545] hover:bg-[#EDF3F8]'
+                      ? 'bg-[#2563EB] text-white shadow-sm'
+                      : 'text-[#B8D4EE] hover:text-white hover:bg-white/10'
                   }`}
                 >
                   {tab.label}
@@ -297,11 +302,11 @@ export default function App() {
           </nav>
 
           {/* Zone 3: Primary CTA */}
-          <div className="hidden sm:flex items-center shrink-0">
+          <div className="hidden md:flex items-center shrink-0">
             <button
               type="button"
               onClick={() => selectTab('contacto', 'formulario')}
-              className="px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-[#1D4ED8] rounded-lg hover:bg-[#1E40AF] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              className="px-4 py-2.5 text-xs sm:text-sm font-bold text-[#041B3D] bg-[#7DD3FC] rounded-lg hover:bg-white transition-colors whitespace-nowrap shrink-0 cursor-pointer"
             >
               Quiero ser Franquiciado
             </button>
@@ -938,11 +943,15 @@ export default function App() {
       </main>
 
       {/* SIMPLE CLEAN FOOTER */}
-      <footer className="bg-[#061527] text-[#B8D4EE] py-8 px-4 sm:px-6 border-t border-white/10">
+      <footer className="bg-[#041B3D] text-[#B8D4EE] py-8 px-4 sm:px-6 border-t border-white/10">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <div className="flex flex-wrap items-center gap-4">
-            <span className="font-bold text-white text-sm">RED GROOM</span>
-            <span>·</span>
+            <img
+              src="/assets/aistudio/Gemini_Generated_Image_lpla4wlpla4wlpla_593d66a4.jfif"
+              alt="GroomRed – Red de Microfranquicias"
+              className="h-12 w-36 object-cover object-center rounded"
+            />
+            <span className="hidden sm:inline">·</span>
             <span className="flex items-center gap-1">
               <Phone className="w-3.5 h-3.5 text-[#7DD3FC]" />
               {siteConfig.contactPhone}
